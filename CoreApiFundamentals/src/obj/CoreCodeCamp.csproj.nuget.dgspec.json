@@ -53,6 +53,14 @@
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[5.0.0-rc.1.20451.13, )"
+            },
+            "SqlKata": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "SqlKata.Execution": {
+              "target": "Package",
+              "version": "[2.2.0, )"
             }
           },
           "imports": [
