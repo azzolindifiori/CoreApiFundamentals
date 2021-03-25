@@ -1,5 +1,4 @@
-﻿using CoreCodeCamp.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace CoreCodeCamp.Models

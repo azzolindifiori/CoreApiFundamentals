@@ -14,23 +14,26 @@ namespace CoreCodeCamp.Controllers
     public class TalksController : ControllerBase
     {
         private readonly ICampRepository _repository;
+        private readonly IGenericRepository _generic;
+        private readonly ITalkRepository _talk;
         private readonly IMapper _mapper;
         private readonly LinkGenerator _linkGenerator;
 
-        public TalksController(ICampRepository repository, IMapper mapper, LinkGenerator linkGenerator)
+        public TalksController(ICampRepository repository, IMapper mapper, LinkGenerator linkGenerator, IGenericRepository generic, ITalkRepository talk)
         {
             _repository = repository;
             _mapper = mapper;
             _linkGenerator = linkGenerator;
+            _generic = generic;
+            _talk = talk;
         }
 
         [HttpGet]
-        public async Task<ActionResult<TalkModel[]>> Get(string moniker)
+        public async Task<ActionResult<Talk[]>> Get(string moniker)
         {
             try
             {
-                var talks = await _repository.GetTalksByMonikerAsync(moniker, true);
-                return _mapper.Map<TalkModel[]>(talks);
+                return await _talk.GetTalksByMonikerAsync(moniker);
             }
             catch (Exception e)
             {
@@ -40,12 +43,12 @@ namespace CoreCodeCamp.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<TalkModel>> Get(string moniker, int id)
+        public async Task<ActionResult<Talk>> Get(string moniker, int id, bool includeSpeakers = false)
         {
             try
             {
-                var talk = await _repository.GetTalkByMonikerAsync(moniker, id, true);
-                return _mapper.Map<TalkModel>(talk);
+                var talk = await _talk.GetTalkByMonikerAsync(moniker, id, includeSpeakers);
+                return talk;
             }
             catch (Exception e)
             {
@@ -55,7 +58,7 @@ namespace CoreCodeCamp.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<TalkModel>> Post(string moniker, TalkModel model)
+        public async Task<ActionResult<Talk>> Post(string moniker, TalkModel model)
         {
             try
             {
@@ -63,27 +66,14 @@ namespace CoreCodeCamp.Controllers
                 if (camp == null) return BadRequest("Camp does not exists");
 
                 var talk = _mapper.Map<Talk>(model);
-                talk.Camp = camp;
 
-                if (model.Speaker == null) return BadRequest("Speaker ID is required");
-                var speaker = await _repository.GetSpeakerAsync(model.Speaker.SpeakerId);
-                if (speaker == null) return BadRequest("Speaker could not be found");
-                talk.Speaker = speaker;
+                await _generic.AddTalk(model, moniker);
 
-                _repository.Add(talk);
+                var url = _linkGenerator.GetPathByAction(HttpContext,
+                    "Get",
+                    values: new { moniker, id = talk.TalkId });
 
-                if (await _repository.SaveChangesAsync())
-                {
-                    var url = _linkGenerator.GetPathByAction(HttpContext,
-                        "Get",
-                        values: new { moniker, id = talk.TalkId });
-
-                    return Created(url, _mapper.Map<TalkModel>(talk));
-                }
-                else
-                {
-                    return BadRequest("Failed to save new Talk");
-                }
+                return Created(url, _mapper.Map<TalkModel>(talk));
             }
             catch (Exception e)
             {
@@ -94,50 +84,37 @@ namespace CoreCodeCamp.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult<TalkModel>> Put(string moniker, int id, TalkModel model)
+        public async Task<ActionResult<Talk>> Put(TalkModel model, string moniker, int id)
         {
             try
             {
-                var talk = await _repository.GetTalkByMonikerAsync(moniker, id, true);
+                var talk = await _talk.GetTalkByMonikerAsync(moniker, id, true);
                 if (talk == null) return BadRequest("Couldn't find the talk");
 
-                _mapper.Map(model, talk);
+                var ok = await _generic.UpdateTalk(model, moniker, id);
 
-                if (model.Speaker != null)
-                {
-                    var speaker = await _repository.GetSpeakerAsync(model.Speaker.SpeakerId);
-                    if(speaker != null)
-                    {
-                        talk.Speaker = speaker;
-                    }
-                }
-
-                if (await _repository.SaveChangesAsync())
-                {
-                    return _mapper.Map<TalkModel>(talk);;
-                }
+                if (ok)
+                    return Ok();
                 else
-                {
-                    return BadRequest("Failed to update  database");
-                }
+                    return BadRequest();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure"); 
+                return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
             }
         }
 
         [HttpDelete("{id:int}")]
-        public async Task<IActionResult> Delete (string moniker, int id)
+        public async Task<IActionResult> Delete(string moniker, int id)
         {
             try
             {
-                var talk = _repository.GetTalkByMonikerAsync(moniker, id);
+                var talk = _talk.GetTalkByMonikerAsync(moniker, id);
                 if (talk == null) return NotFound("Failed to find the talk to delete");
-                _repository.Delete(talk);
+                await _generic.DeleteTalk(moniker, id);
 
-                if (await _repository.SaveChangesAsync())
+                if (await _generic.SaveChangesAsync())
                 {
                     return Ok();
                 }

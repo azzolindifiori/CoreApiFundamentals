@@ -53,3 +53,16 @@ C:\Users\davide.azzolini\Documents\Corso API\CoreApiFundamentals\src\obj\Debug\n
 C:\Users\davide.azzolini\Documents\Corso API\CoreApiFundamentals\src\obj\Debug\net5.0\CoreCodeCamp.genruntimeconfig.cache
 C:\Users\davide.azzolini\Documents\Corso API\CoreApiFundamentals\src\bin\Debug\net5.0\AutoMapper.dll
 C:\Users\davide.azzolini\Documents\Corso API\CoreApiFundamentals\src\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\davide.azzolini\Documents\Corso API\CoreApiFundamentals\src\bin\Debug\net5.0\Dapper.dll
+C:\Users\davide.azzolini\Documents\Corso API\CoreApiFundamentals\src\bin\Debug\net5.0\Microsoft.DotNet.PlatformAbstractions.dll
+C:\Users\davide.azzolini\Documents\Corso API\CoreApiFundamentals\src\bin\Debug\net5.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\davide.azzolini\Documents\Corso API\CoreApiFundamentals\src\bin\Debug\net5.0\Serilog.dll
+C:\Users\davide.azzolini\Documents\Corso API\CoreApiFundamentals\src\bin\Debug\net5.0\Serilog.AspNetCore.dll
+C:\Users\davide.azzolini\Documents\Corso API\CoreApiFundamentals\src\bin\Debug\net5.0\Serilog.Extensions.Hosting.dll
+C:\Users\davide.azzolini\Documents\Corso API\CoreApiFundamentals\src\bin\Debug\net5.0\Serilog.Extensions.Logging.dll
+C:\Users\davide.azzolini\Documents\Corso API\CoreApiFundamentals\src\bin\Debug\net5.0\Serilog.Formatting.Compact.dll
+C:\Users\davide.azzolini\Documents\Corso API\CoreApiFundamentals\src\bin\Debug\net5.0\Serilog.Settings.Configuration.dll
+C:\Users\davide.azzolini\Documents\Corso API\CoreApiFundamentals\src\bin\Debug\net5.0\Serilog.Sinks.Console.dll
+C:\Users\davide.azzolini\Documents\Corso API\CoreApiFundamentals\src\bin\Debug\net5.0\Serilog.Sinks.Debug.dll
+C:\Users\davide.azzolini\Documents\Corso API\CoreApiFundamentals\src\bin\Debug\net5.0\Serilog.Sinks.File.dll
+C:\Users\davide.azzolini\Documents\Corso API\CoreApiFundamentals\src\bin\Debug\net5.0\SqlKata.dll

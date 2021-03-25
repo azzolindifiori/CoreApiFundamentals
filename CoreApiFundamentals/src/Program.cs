@@ -1,24 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
+using Serilog;
+using Serilog.Events;
 
 namespace CoreCodeCamp
 {
-  public class Program
-  {
-    public static void Main(string[] args)
+    public class Program
     {
-      CreateWebHostBuilder(args).Build().Run();
-    }
+        public static void Main(string[] args)
+        {
+            Log.Logger = new LoggerConfiguration()
+             .MinimumLevel.Information()
+             .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+             .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+             .Enrich.FromLogContext()
+             .WriteTo.Console()
+             .CreateLogger();
 
-    public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-        WebHost.CreateDefaultBuilder(args)
-            .UseStartup<Startup>();
-  }
+            try
+            {
+                Log.Information("Starting Server ...");
+                CreateHostBuilder(args).Build().Run();
+                Log.Information("Shutting down Server ...");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
+        }
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                })
+                .UseSerilog();
+    }
 }
