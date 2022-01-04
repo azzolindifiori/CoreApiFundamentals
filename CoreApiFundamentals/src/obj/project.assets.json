@@ -6802,20 +6802,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\davide.azzolini\\.nuget\\packages\\": {}
+    "C:\\Users\\azzo9\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\davide.azzolini\\Documents\\Corso API\\CoreApiFundamentals\\src\\CoreCodeCamp.csproj",
+      "projectUniqueName": "C:\\Users\\azzo9\\Desktop\\CoreApiFundamentals\\CoreApiFundamentals\\src\\CoreCodeCamp.csproj",
       "projectName": "CoreCodeCamp",
-      "projectPath": "C:\\Users\\davide.azzolini\\Documents\\Corso API\\CoreApiFundamentals\\src\\CoreCodeCamp.csproj",
-      "packagesPath": "C:\\Users\\davide.azzolini\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\davide.azzolini\\Documents\\Corso API\\CoreApiFundamentals\\src\\obj\\",
+      "projectPath": "C:\\Users\\azzo9\\Desktop\\CoreApiFundamentals\\CoreApiFundamentals\\src\\CoreCodeCamp.csproj",
+      "packagesPath": "C:\\Users\\azzo9\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\azzo9\\Desktop\\CoreApiFundamentals\\CoreApiFundamentals\\src\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Microsoft\\Xamarin\\NuGet\\"
+      ],
       "configFilePaths": [
-        "C:\\Users\\davide.azzolini\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\azzo9\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net5.0"

@@ -16,7 +16,7 @@ namespace CoreCodeCamp
              .Enrich.FromLogContext()
              .WriteTo.Console()
              .CreateLogger();
-
+            //tryme
             try
             {
                 Log.Information("Starting Server ...");
